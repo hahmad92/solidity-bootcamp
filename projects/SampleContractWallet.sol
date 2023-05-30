@@ -30,7 +30,7 @@ contract SampleContractWallet {
             allowance[msg.sender] -= _amount;
         }
         if(msg.sender == owner){
-            require(_amount <= ad dress(this).balance, "Can't send more than the contract owns, aborting.");
+            require(_amount <= address(this).balance, "Can't send more than the contract owns, aborting.");
             (bool success,bytes memory message ) = _to.call{value: _amount}(_payload);
             require(success, "Transaction failed, aborting");
             return message;
@@ -52,7 +52,7 @@ contract SampleContractWallet {
     }
 
     function proposeNewOwner(address payable newOwner) public {
-        require(guardian[msg.sender], "You are no guardian, aborting");
+        require(guardians[msg.sender], "You are no guardian, aborting");
         if(nextOwner != newOwner) {
             nextOwner = newOwner;
             guardiansResetCount = 0;
